@@ -1,27 +1,27 @@
 var app = angular.module('allsky', ['ngLodash']);
 
 $(window).resize(function () {
-	buildOverlay();
+    buildOverlay();
 });
 
-function buildOverlay(){
+function buildOverlay() {
     var planetarium;
-	$.ajax({
-		url: "virtualsky.json" + '?_ts=' + new Date().getTime(),
-		cache: false
-	}).done(
-		function (data) {
-		    // This is to scale the overlay when the window is resized
-			data.width = window.innerWidth < config.overlaySize ? window.innerWidth : config.overlaySize;
-			data.height = data.width;
-			data.latitude = config.latitude;
-			data.longitude = config.longitude;
-			data.az = config.az;
-			planetarium = $.virtualsky(data);
+    $.ajax({
+        url: "virtualsky.json" + '?_ts=' + new Date().getTime(),
+        cache: false
+    }).done(
+        function (data) {
+            // This is to scale the overlay when the window is resized
+            data.width = window.innerWidth < config.overlaySize ? window.innerWidth : config.overlaySize;
+            data.height = data.width;
+            data.latitude = config.latitude;
+            data.longitude = config.longitude;
+            data.az = config.az;
+            planetarium = $.virtualsky(data);
             $("#starmap").css("margin-top", config.overlayOffsetTop + "px");
             $("#starmap").css("margin-left", config.overlayOffsetLeft + "px");
-		}
-	);
+        }
+    );
 };
 
 function compile($compile) {
@@ -51,9 +51,9 @@ function AppCtrl($scope, $timeout, $http, _) {
 
     buildOverlay();
     // Rebuild the overlay every minute in order to follow the stars in the picture.
-    setInterval(function (){
+    setInterval(function () {
         buildOverlay();
-    },60 * 1000);
+    }, 60 * 1000);
 
     $scope.imageURL = "loading.jpg";
     $scope.showInfo = false;
@@ -91,8 +91,8 @@ function AppCtrl($scope, $timeout, $http, _) {
     }
 
     $scope.getImage = function () {
-        var url= "";
-        var imageClass= "";
+        var url = "";
+        var imageClass = "";
         if (!isHidden() && $scope.sunset) {
             var now = moment.utc(new Date());
             if (moment($scope.sunset).isBefore(now)) {
@@ -108,7 +108,7 @@ function AppCtrl($scope, $timeout, $http, _) {
                 url = "http://services.swpc.noaa.gov/images/animations/ovation/" + config.auroraMap + "/latest.jpg";
                 imageClass = 'forecast-map';
                 //Countdown calculation
-                var ms = moment($scope.sunset,"DD/MM/YYYY HH:mm:ss").diff(moment(now,"DD/MM/YYYY HH:mm:ss"));
+                var ms = moment($scope.sunset, "DD/MM/YYYY HH:mm:ss").diff(moment(now, "DD/MM/YYYY HH:mm:ss"));
                 var d = moment.duration(ms);
                 var hours = Math.floor(d.asHours());
                 var minutes = moment.utc(ms).format("mm");
@@ -118,10 +118,10 @@ function AppCtrl($scope, $timeout, $http, _) {
                 $scope.notification = "It's not dark yet in " + config.location + ". Come back in " + s;
             }
             var img = $("<img />").attr('src', url + '?_ts=' + new Date().getTime()).addClass(imageClass)
-                .on('load', function() {
+                .on('load', function () {
                     if (!this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0) {
                         alert('broken image!');
-                        $timeout(function(){
+                        $timeout(function () {
                             $scope.getImage();
                         }, 500);
                     } else {
@@ -139,7 +139,7 @@ function AppCtrl($scope, $timeout, $http, _) {
             function (data) {
                 $scope.sunset = moment(data.data.sunset);
                 $scope.streamDaytime = data.data.streamDaytime === "true";
-				$scope.getImage()
+                $scope.getImage()
             }
         );
     };
@@ -158,11 +158,11 @@ function AppCtrl($scope, $timeout, $http, _) {
     $scope.toggleInfo = function () {
         $scope.showInfo = !$scope.showInfo;
     };
-	
-	$scope.toggleOverlay = function () {
+
+    $scope.toggleOverlay = function () {
         $scope.showOverlay = !$scope.showOverlay;
-		$('.options').fadeToggle();
-		$('#starmap_container').fadeToggle();
+        $('.options').fadeToggle();
+        $('#starmap_container').fadeToggle();
     };
 
     $scope.getScale = function (index) {
@@ -212,4 +212,4 @@ angular
     .module('allsky')
     .directive('compile', ['$compile', compile])
     .controller("AppCtrl", ['$scope', '$timeout', '$http', 'lodash', AppCtrl])
-;
+    ;

@@ -1,4 +1,5 @@
 <html>
+<!-- ThumbNails are on lines 37 and 38 in "aurora-snap.jpg" -->
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="../analyticstracking.js"></script>
