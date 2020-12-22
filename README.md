@@ -19,7 +19,7 @@ Web interface displaying an image from an allsky camera.
 
 **config.js** is the only file you need to modify. The content is described below.
 
-Aurora and Keograms Removed.
+**Aurora and Keograms Removed.**
 
 ## Configuration
 
