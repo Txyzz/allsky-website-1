@@ -1,4 +1,6 @@
 # allsky-website
+Made By [Thomas Jacquin](https://github.com/thomasjacquin) and modified/commented by [Gabriel Maiworm](https://github.com/thomasjacquin).
+
 Web interface displaying an image from an allsky camera.
 
 ## Brief overview
